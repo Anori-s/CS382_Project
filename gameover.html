@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Game Over – Pac‑Man</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #1a1a2e;
+      color: #eee;
+      font-family: 'Press Start 2P', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .card {
+      background: #0f0f1a;
+      padding: 32px;
+      border-radius: 12px;
+      text-align: center;
+      border: 2px solid #3a3aff;
+      box-shadow: 0 0 40px rgba(58,58,255,0.3);
+    }
+    h2 { color: #f7c948; margin-bottom: 24px; }
+    .score { font-size: 24px; margin: 20px 0; }
+    input {
+      background: #2a2a4a;
+      border: 1px solid #3a3aff;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 16px;
+      color: #eee;
+      text-align: center;
+      border-radius: 4px;
+      margin: 16px 0;
+    }
+    button {
+      background: #f7c948;
+      color: #1a1a2e;
+      border: none;
+      padding: 12px 24px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      cursor: pointer;
+      margin: 8px;
+      border-radius: 4px;
+    }
+    #save-msg { margin-top: 16px; font-size: 10px; }
+  </style>
+</head>
+<body>
+<div class="card">
+  <h2>GAME OVER</h2>
+  <div class="score">YOUR SCORE: <strong id="final-score">0</strong></div>
+  <input type="text" id="name" placeholder="ENTER YOUR NAME" maxlength="20">
+  <div>
+    <button id="save-btn"> SAVE SCORE</button>
+    <button id="play-btn">PLAY AGAIN</button>
+  </div>
+  <div id="save-msg"></div>
+</div>
+
+<script>
+  // Read data set by game.html when player dies
+  const finalScore = sessionStorage.getItem('finalScore') || '0';
+  const storedName = sessionStorage.getItem('playerName') || '';
+  document.getElementById('final-score').textContent = finalScore;
+  document.getElementById('name').value = storedName;
+
+  document.getElementById('save-btn').addEventListener('click', async () => {
+    const playerName = document.getElementById('name').value.trim();
+    if (!playerName) {
+      alert('Enter your name');
+      return;
+    }
+    const msgDiv = document.getElementById('save-msg');
+    try {
+      const res = await fetch('save_score.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: playerName, score: parseInt(finalScore) })
+      });
+      const data = await res.json();
+      if (data.success) {
+        msgDiv.textContent = '✓ Score saved!';
+        msgDiv.style.color = '#7aff7a';
+      } else {
+        msgDiv.textContent = '✗ Error saving.';
+        msgDiv.style.color = '#ff7a7a';
+      }
+    } catch (err) {
+      msgDiv.textContent = '✗ Server error. Is PHP running?';
+      msgDiv.style.color = '#ff7a7a';
+    }
+  });
+
+  document.getElementById('play-btn').addEventListener('click', () => {
+    window.location.href = 'game.html';
+  });
+</script>
+</body>
+</html>
