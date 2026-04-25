@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pac-Man</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="game-screen">
+
+  <!-- score, level, lives,pause -->
+  <div class="game-hud">
+    <div class="hud-stat">
+      <span class="hud-label">Score</span>
+      <span class="hud-value" id="score">0</span>
+    </div>
+    <div class="hud-stat">
+      <span class="hud-label">Level</span>
+      <span class="hud-value" id="level">1</span>
+    </div>
+    <div class="hud-stat">
+      <span class="hud-label">Lives</span>
+      <span class="hud-value" id="lives">3</span> <!--3 lives-->
+    </div>
+    <button class="pause-btn" id="pause-btn">Pause</button>
+  </div>
+
+  <!-- the game canvas (square)-->
+  <canvas id="gameCanvas" width="448" height="496"></canvas>
+  <div id="ready-msg" class="ready-msg hidden">Ready!</div>
+
+  <script src="level.js"></script>
+  <script src="game.js"></script>
+
+</body>
+</html>
