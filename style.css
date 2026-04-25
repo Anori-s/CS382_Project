@@ -1,0 +1,127 @@
+/* Reset: إزالة المسافات الافتراضية من كل العناصر */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* إعدادات عامة للصفحة */
+body {
+  font-family: "Press Start 2P", monospace; /* خط يشبه ألعاب قديمة */
+  background: #1a1a2e; /* خلفية داكنة */
+  color: #eeeeee; /* لون النص */
+  min-height: 100vh; /* يغطي كامل الشاشة */
+  
+  /* توسيط المحتوى في منتصف الصفحة */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* خلفية خاصة بصفحة البداية */
+.start-screen {
+  background:
+    radial-gradient(circle at top, rgba(58, 58, 255, 0.15), transparent 35%), /* تأثير ضوء */
+    #1a1a2e;
+}
+
+/* الكارد (الصندوق اللي يحتوي العناصر) */
+.start-card {
+  width: min(90%, 420px); /* عرض مرن */
+  text-align: center;
+  
+  background: rgba(0, 0, 0, 0.25); /* خلفية شفافة شوي */
+  border: 2px solid #3a3aff; /* إطار أزرق */
+  border-radius: 16px; /* زوايا ناعمة */
+  
+  padding: 32px 24px;
+  box-shadow: 0 0 24px rgba(58, 58, 255, 0.25); /* ظل */
+}
+
+/* عنوان اللعبة */
+.game-title {
+  font-size: 2.2rem;
+  color: #f7c948; /* أصفر Pac-Man */
+  margin-bottom: 12px;
+  letter-spacing: 2px; /* تباعد الحروف */
+}
+
+/* النص الصغير تحت العنوان */
+.subtitle {
+  font-size: 0.75rem;
+  color: #cfd3ff;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+/* container للـ input */
+.input-group {
+  margin-bottom: 18px;
+}
+
+/* حقل إدخال الاسم */
+#player-name {
+  width: 100%;
+  padding: 14px 16px;
+  
+  border: 2px solid #3a3aff;
+  border-radius: 10px;
+  
+  background: #0f1020;
+  color: #ffffff;
+  
+  font-family: inherit; /* نفس خط الصفحة */
+  font-size: 0.8rem;
+  
+  outline: none; /* إزالة الإطار الافتراضي */
+}
+
+/* لون placeholder */
+#player-name::placeholder {
+  color: #8d92c9;
+}
+
+/* عند الضغط على الحقل */
+#player-name:focus {
+  border-color: #f7c948; /* يتحول أصفر */
+  box-shadow: 0 0 0 3px rgba(247, 201, 72, 0.2); /* تأثير خفيف */
+}
+
+/* زر Play */
+.primary-btn {
+  width: 100%;
+  padding: 14px 16px;
+  
+  border: none;
+  border-radius: 10px;
+  
+  background: #f7c948; /* أصفر */
+  color: #1a1a2e;
+  
+  font-family: inherit;
+  font-size: 0.85rem;
+  
+  cursor: pointer;
+  transition: 0.2s ease; /* حركة ناعمة */
+  
+  margin-bottom: 16px;
+}
+
+/* تأثير hover للزر */
+.primary-btn:hover {
+  background: #ffd966; /* لون أفتح */
+  transform: translateY(-1px); /* يتحرك لفوق شوي */
+}
+
+/* رابط leaderboard */
+.leaderboard-link {
+  display: inline-block;
+  color: #cfd3ff;
+  text-decoration: none;
+  font-size: 0.7rem;
+}
+
+/* عند المرور على الرابط */
+.leaderboard-link:hover {
+  color: #f7c948; /* يتحول أصفر */
+}
