@@ -125,3 +125,113 @@ body {
 .leaderboard-link:hover {
   color: #f7c948; /* يتحول أصفر */
 }
+
+/* ─── game.html ──────────────────────────────── */
+
+/* Page body — column layout, centred, no gap scrolling */
+.game-screen {
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 20px;
+  gap: 12px;
+}
+
+/* HUD bar — sits above the canvas */
+.game-hud {
+  width: 448px;                        /* matches canvas width */
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  background: rgba(0, 0, 0, 0.25);    /* same as .start-card */
+  border: 2px solid #3a3aff;
+  border-radius: 10px;
+  padding: 10px 16px;
+  box-shadow: 0 0 24px rgba(58, 58, 255, 0.25);
+}
+
+/* Individual stat block (Score / Level / Lives) */
+.hud-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hud-label {
+  font-size: 0.5rem;
+  color: #cfd3ff;                      /* same as .subtitle */
+  letter-spacing: 1px;
+}
+
+.hud-value {
+  font-size: 0.85rem;
+  color: #f7c948;                      /* same yellow as .game-title */
+}
+
+/* Pause button — right-aligned in the HUD */
+.pause-btn {
+  margin-left: auto;
+  padding: 8px 14px;
+
+  border: 2px solid #3a3aff;
+  border-radius: 8px;
+
+  background: transparent;
+  color: #cfd3ff;
+
+  font-family: inherit;
+  font-size: 0.55rem;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.pause-btn:hover {
+  background: rgba(58, 58, 255, 0.2);
+  color: #f7c948;
+}
+
+/* Canvas */
+#gameCanvas {
+  display: block;
+  border: 2px solid #3a3aff;
+  border-radius: 4px;
+  box-shadow: 0 0 24px rgba(58, 58, 255, 0.25);
+}
+
+/* "Ready!" flash overlay */
+.ready-msg {
+  font-size: 0.85rem;
+  color: #f7c948;
+  letter-spacing: 4px;
+  animation: blink 0.6s step-end infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.hidden { display: none !important; }
+
+/* Responsive: shrink on small screens */
+@media (max-width: 480px) {
+  .game-hud  { width: 100%; gap: 12px; }
+  #gameCanvas { width: 100%; height: auto; }
+}
+
+/* ─────────────────────────────────────────────
+   RESPONSIVE — scale canvas on small screens
+───────────────────────────────────────────── */
+@media (max-width: 480px) {
+  #gameCanvas {
+    width: 280px;
+    height: 310px;
+    transform-origin: top center;
+  }
+
+  #hud { gap: 16px; font-size: 9px; }
+
+  .start-screen h1 { font-size: 22px; letter-spacing: 4px; }
+
+  input[type="text"] { width: 200px; }
+}
