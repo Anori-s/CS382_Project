@@ -235,3 +235,43 @@ body {
 
   input[type="text"] { width: 200px; }
 }
+/* تصميم input حق الاسم والإيميل */
+#reg-name,
+#reg-email {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #3a3aff;
+  border-radius: 10px;
+  background: #0f1020;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.8rem;
+  outline: none;
+}
+
+/* لون placeholder */
+#reg-name::placeholder,
+#reg-email::placeholder {
+  color: #8d92c9;
+}
+
+/* عند الضغط على الحقل */
+#reg-name:focus,
+#reg-email:focus {
+  border-color: #f7c948;
+  box-shadow: 0 0 0 3px rgba(247, 201, 72, 0.2);
+}
+
+/* رابط Register */
+.secondary-link {
+  display: block;
+  color: #f7c948;
+  text-decoration: none;
+  font-size: 0.7rem;
+  margin-bottom: 12px;
+}
+
+/* hover */
+.secondary-link:hover {
+  color: #ffd966;
+}

@@ -23,22 +23,35 @@
 />
     </div>
 
-    <button id="play-btn" class="primary-btn">Play</button>
+   <button id="play-btn" class="primary-btn">Play as Guest</button>
 
-    <a href="leaderboard.html" class="leaderboard-link">View Leaderboard</a>
+<a href="register.html" class="secondary-link">Register</a>
+<a href="leaderboard.html" class="leaderboard-link">View Leaderboard</a>
   </main>
 
-  <script>
-    document.getElementById("play-btn").addEventListener("click", () => {
-      const name = document.getElementById("player-name").value.trim();
-      if (!name) {
-        alert("Please enter your name!");
-        return;
-      }
+ <script>
+  document.getElementById("play-btn").addEventListener("click", () => {
+    const name = document.getElementById("player-name").value.trim();
 
-      sessionStorage.setItem("playerName", name);
-      window.location.href = "game.html";
-    });
-  </script>
+    const registeredName = sessionStorage.getItem("registeredName");
+    const registeredEmail = sessionStorage.getItem("registeredEmail");
+
+    if (!name) {
+      alert("Please enter your name!");
+      return;
+    }
+
+    if (!registeredName || name !== registeredName) {
+      alert("This username is not registered. Please register first.");
+      return;
+    }
+
+    sessionStorage.setItem("playerName", registeredName);
+    sessionStorage.setItem("playerEmail", registeredEmail);
+    sessionStorage.setItem("isLoggedIn", "true");
+
+    window.location.href = "game.html";
+  });
+</script>
 </body>
 </html>

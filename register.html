@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="start-screen">
+
+<main class="start-card">
+  <h1 class="game-title">REGISTER</h1>
+  <p class="subtitle">Create account</p>
+
+  <!-- اسم المستخدم -->
+  <div class="input-group">
+    <input type="text" id="reg-name" placeholder="Username">
+  </div>
+
+  <!-- ايميل -->
+  <div class="input-group">
+    <input type="email" id="reg-email" placeholder="Email">
+  </div>
+
+  <!-- زر التسجيل -->
+  <button id="register-btn" class="primary-btn">Register</button>
+</main>
+
+<script>
+  document.getElementById("register-btn").addEventListener("click", () => {
+    const name = document.getElementById("reg-name").value.trim();
+    const email = document.getElementById("reg-email").value.trim();
+
+    if (!name || !email) {
+      alert("Please fill all fields!");
+      return;
+    }
+
+    if (!email.includes("@") || !email.includes(".")) {
+      alert("Please enter a valid email!");
+      return;
+    }
+
+    sessionStorage.setItem("registeredName", name);
+    sessionStorage.setItem("registeredEmail", email);
+
+    alert("Registration successful! Please login from the home page.");
+    window.location.href = "index.html";
+  });
+</script>
+
+</body>
+</html>
