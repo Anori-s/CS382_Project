@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Pac-Man</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
@@ -26,11 +27,12 @@
     <button class="pause-btn" id="pause-btn">Pause</button>
   </div>
 
-  <!-- the game canvas (square)-->
+  <!-- the game canvas (square) -->
   <canvas id="gameCanvas" width="448" height="496"></canvas>
   <div id="ready-msg" class="ready-msg hidden">Ready!</div>
 
   <script src="level.js"></script>
+  <script src="ghosts.js"></script>
   <script src="game.js"></script>
 
 </body>

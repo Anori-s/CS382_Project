@@ -10,47 +10,46 @@
 <body class="start-screen">
   <main class="start-card">
     <h1 class="game-title">PAC-MAN</h1>
-    <p class="subtitle">Enter your name and start the game</p>
+<p class="subtitle">Login to start the game</p>
+<!-- replace the existing input-group div with these two -->
+<div class="input-group">
+  <input type="text" id="player-name" placeholder="Username" maxlength="20">
+</div>
+<div class="input-group">
+  <input type="password" id="player-password" placeholder="Password">
+</div>
 
-    <div class="input-group">
-    <input
-  type="text"
-  id="player-name"
-  placeholder="Your name"
-  maxlength="20"
-  aria-label="Player name"
-  required
-/>
-    </div>
-
-   <button id="play-btn" class="primary-btn">Play as Guest</button>
+<!-- change the button label too -->
+<button id="play-btn" class="primary-btn">Login & Play</button>
 
 <a href="register.html" class="secondary-link">Register</a>
 <a href="leaderboard.html" class="leaderboard-link">View Leaderboard</a>
   </main>
 
- <script>
-  document.getElementById("play-btn").addEventListener("click", () => {
-    const name = document.getElementById("player-name").value.trim();
+<script>
+  document.getElementById("play-btn").addEventListener("click", async () => {
+    const name     = document.getElementById("player-name").value.trim();
+    const password = document.getElementById("player-password").value.trim();
 
-    const registeredName = sessionStorage.getItem("registeredName");
-    const registeredEmail = sessionStorage.getItem("registeredEmail");
-
-    if (!name) {
-      alert("Please enter your name!");
+    if (!name || !password) {
+      alert("Please enter your username and password!");
       return;
     }
 
-    if (!registeredName || name !== registeredName) {
-      alert("This username is not registered. Please register first.");
-      return;
+    const res  = await fetch("login.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, password })
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      sessionStorage.setItem("playerName", name);
+      sessionStorage.setItem("isLoggedIn", "true");
+      window.location.href = "game.html";
+    } else {
+      alert("Wrong username or password!");
     }
-
-    sessionStorage.setItem("playerName", registeredName);
-    sessionStorage.setItem("playerEmail", registeredEmail);
-    sessionStorage.setItem("isLoggedIn", "true");
-
-    window.location.href = "game.html";
   });
 </script>
 </body>

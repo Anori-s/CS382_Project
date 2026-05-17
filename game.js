@@ -18,12 +18,12 @@ let mazeTemplate = [];
 let maze= [];
 
 function loadMaze() {
-  return $.get('maze.json') //load maze using .get
+  return $.get('Maze.json') //load maze from json file using .get
     .done(function (data) {
       mazeTemplate = data;
     })
     .fail(function (jqXHR, textStatus, errorThrown) {//error throw
-      console.error('Failed to load maze.json:', textStatus, errorThrown);
+      console.error('Failed to load Maze.json:', textStatus, errorThrown);
     });
 }
 
@@ -257,6 +257,7 @@ function loseLife() {
   player.y = 22;
   player.dir= { x: 0, y: 0 };
   player.nextDir = { x: 0, y: 0 };
+  respawnGhosts();
   showReady();
 }
 
@@ -281,7 +282,9 @@ function gameLoop(timestamp) {
 
     drawMaze();
     updatePlayer(delta);
+    updateGhosts(delta);
     drawPlayer();
+    drawGhosts();
 
   }
 
@@ -299,8 +302,8 @@ $(document).ready(function () {
     return;
   }
 
-  // Load maze data from maze.json using jQuery $.get()
-  $.get('maze.json')
+  // Load maze data from Maze.json using jQuery $.get()
+  $.get('Maze.json')
     .done(function (data) {
       mazeTemplate = data;
 
@@ -313,6 +316,7 @@ $(document).ready(function () {
 
       // Fill the live maze and show "Ready!"
       resetMaze();
+      initGhosts();
       showReady();
 
       // pause so player sees "Ready!" before the loop starts
@@ -322,7 +326,7 @@ $(document).ready(function () {
       }, 2000);
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
-      console.error('Failed to load maze.json:', textStatus, errorThrown);
+      console.error('Failed to load Maze.json:', textStatus, errorThrown);
     });
 
 });

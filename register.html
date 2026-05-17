@@ -13,26 +13,28 @@
   <h1 class="game-title">REGISTER</h1>
   <p class="subtitle">Create account</p>
 
-  <!-- اسم المستخدم -->
   <div class="input-group">
     <input type="text" id="reg-name" placeholder="Username">
   </div>
 
-  <!-- ايميل -->
   <div class="input-group">
     <input type="email" id="reg-email" placeholder="Email">
   </div>
 
-  <!-- زر التسجيل -->
+<div class="input-group">
+  <input type="password" id="reg-password" placeholder="Password">
+</div>
+
   <button id="register-btn" class="primary-btn">Register</button>
 </main>
 
 <script>
-  document.getElementById("register-btn").addEventListener("click", () => {
+  document.getElementById("register-btn").addEventListener("click", async () => {
     const name = document.getElementById("reg-name").value.trim();
     const email = document.getElementById("reg-email").value.trim();
+    const password = document.getElementById("reg-password").value.trim();
 
-    if (!name || !email) {
+    if (!name || !email || !password) {
       alert("Please fill all fields!");
       return;
     }
@@ -42,11 +44,20 @@
       return;
     }
 
-    sessionStorage.setItem("registeredName", name);
-    sessionStorage.setItem("registeredEmail", email);
+    //Send to PHP
+    const res  = await fetch("register.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password })
+    });
+    const data = await res.json(); //get response
 
-    alert("Registration successful! Please login from the home page.");
-    window.location.href = "index.html";
+    if (data.success) {//if registration successful
+      alert("Registration successful! Please login.");
+      window.location.href = "index.html";//redirect to login
+    } else {
+      alert("Error: " + data.error);
+    }
   });
 </script>
 

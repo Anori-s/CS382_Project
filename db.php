@@ -3,7 +3,7 @@
 $host = 'localhost';
 $dbname = 'pacman_db';
 $user = 'root';   // XAMPP default
-$pass = '';       // XAMPP default (empty)
+$pass = 'Norah123';       // XAMPP default (empty)
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $pass);
