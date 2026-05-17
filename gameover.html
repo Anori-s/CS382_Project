@@ -57,14 +57,14 @@
   <div class="score">YOUR SCORE: <strong id="final-score">0</strong></div>
   <input type="text" id="name" placeholder="ENTER YOUR NAME" maxlength="20">
   <div>
-    <button id="save-btn"> SAVE SCORE</button>
+    <button id="save-btn">SAVE SCORE</button>
     <button id="play-btn">PLAY AGAIN</button>
+    <button id="leaderboard-btn">LEADERBOARD</button>   <!-- NEW BUTTON -->
   </div>
   <div id="save-msg"></div>
 </div>
 
 <script>
-  // Read data set by game.html when player dies
   const finalScore = sessionStorage.getItem('finalScore') || '0';
   const storedName = sessionStorage.getItem('playerName') || '';
   document.getElementById('final-score').textContent = finalScore;
@@ -99,6 +99,11 @@
 
   document.getElementById('play-btn').addEventListener('click', () => {
     window.location.href = 'game.html';
+  });
+
+  // NEW: Leaderboard button redirect
+  document.getElementById('leaderboard-btn').addEventListener('click', () => {
+    window.location.href = 'leaderboard.html';
   });
 </script>
 </body>
