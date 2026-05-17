@@ -1,10 +1,9 @@
-// ======================================================
+
 // LEVEL PROGRESSION – to be merged into game.js
-// ======================================================
 let currentLevel = 1;
 let levelCleared = false;
 
-// Speed scaling: +0.5 for Pac‑Man, +0.4 for ghosts each level
+// Speed: +0.5 for pac‑man, +0.4 for ghosts each level
 function applyLevelSpeed() {
   if (typeof player !== 'undefined') {
     player.speed = 4.0 + (currentLevel - 1) * 0.5;
@@ -29,9 +28,9 @@ function checkLevelUp(maze, TILE) {
     levelCleared = true;
     currentLevel++;
     applyLevelSpeed();
-    // Tell the core game to reset the maze (keep score & lives)
+    // tell the core game to reset the maze (keep score & lives)
     if (typeof resetMazeForNextLevel === 'function') resetMazeForNextLevel();
-    // Update on‑screen level display
+    // update on‑screen level display
     const levelElem = document.getElementById('level');
     if (levelElem) levelElem.innerText = currentLevel;
   }

@@ -1,30 +1,4 @@
-// =============================================================================
-// ghosts.js — Full Ghost System
-// Handles: spawn, exit from ghost house, random movement,
-//          4 AI personalities, frightened mode, eaten state
-//
-// HOW TO USE:
-//   1. Include this file in game.html BEFORE game.js
-//      <script src="ghosts.js"></script>
-//      <script src="game.js"></script>
-//   2. Call initGhosts() once when the game starts
-//   3. Call updateGhosts(delta) every frame inside your game loop
-//   4. Call drawGhosts() every frame after updateGhosts
-//   5. Call activateFrightened() when Pac-Man eats a power pellet
-//   6. Call respawnGhosts() on each new life
-//
-// DEPENDS ON (must exist in game.js / global scope):
-//   - canvas, ctx          : the game canvas and 2D context
-//   - TILE_SIZE            : pixels per tile (16)
-//   - TILE                 : { EMPTY, WALL, PELLET, POWER }
-//   - maze                 : the 2D tile array
-//   - player               : { x, y, dir } — Pac-Man object
-//   - addScore(points)     : function to add points to score display
-// =============================================================================
 
-// ---------------------------------------------------------------------------
-// 1. Constants
-// ---------------------------------------------------------------------------
 
 let GHOST_SPEED_NORMAL        = 3.5;  // tiles per second (normal)
 const GHOST_SPEED_FRIGHTENED = 2.0;  // tiles per second (frightened — slower)
@@ -36,10 +10,10 @@ const FLASH_START         = 2000;   // ms before end to start flashing
 const SCATTER_DURATION    = 7000;   // ms ghosts scatter before chasing
 const CHASE_DURATION      = 20000;  // ms ghosts chase before scattering
 
-// Ghost house door tile position (centre, in tile coords)
+
 const HOUSE_DOOR = { col: 13, row: 11 };
 
-// Each ghost's scatter corner (tile coords) — they retreat here in scatter mode
+
 const SCATTER_TARGETS = {
   blinky: { col: 25, row: 0  },
   pinky:  { col: 2,  row: 0  },
@@ -47,7 +21,7 @@ const SCATTER_TARGETS = {
   clyde:  { col: 0,  row: 29 },
 };
 
-// Ghost start positions inside the house (tile coords)
+// Ghost start positions inside the house 
 const GHOST_STARTS = {
   blinky: { col: 13, row: 11, outsideHouse: true  }, // Blinky starts outside
   pinky:  { col: 13, row: 14, outsideHouse: false },
@@ -55,7 +29,7 @@ const GHOST_STARTS = {
   clyde:  { col: 15, row: 14, outsideHouse: false },
 };
 
-// Release delays after a life starts (ms)
+// Release delays after a life starts 
 const RELEASE_DELAYS = {
   blinky: 0,
   pinky:  3000,
@@ -63,13 +37,11 @@ const RELEASE_DELAYS = {
   clyde:  9000,
 };
 
-// Score for eating ghosts (doubles each consecutive eat in one power pellet)
+// Score for eating ghosts 
 const GHOST_EAT_BASE  = 200;
 let ghostEatCombo     = 0; // reset when power pellet wears off
 
-// ---------------------------------------------------------------------------
-// 2. Ghost state machine
-// ---------------------------------------------------------------------------
+
 // Each ghost can be in one of these states:
 //   'house'      — bouncing inside the ghost house, waiting to exit
 //   'exiting'    — moving up and out through the house door
@@ -78,9 +50,6 @@ let ghostEatCombo     = 0; // reset when power pellet wears off
 //   'frightened' — blue, slow, random movement
 //   'eaten'      — just eyes, rushing back to ghost house
 
-// ---------------------------------------------------------------------------
-// 3. Ghost objects
-// ---------------------------------------------------------------------------
 
 let ghosts = [];
 
@@ -91,20 +60,20 @@ function createGhost(name, color, eyeColor) {
     color,
     eyeColor,
 
-    // Position in tile coords (fractional for smooth movement)
+    // Position in tile coords
     x: start.col,
     y: start.row,
 
     // Current movement direction vector
     dir: { x: 0, y: -1 },
 
-    // Queued next direction (chosen at tile centres)
+    // Queued next direction 
     nextDir: null,
 
     // State
     state: start.outsideHouse ? 'scatter' : 'house',
 
-    // Sub-state for house bounce
+
     houseMoveDir: 1,           // +1 down, -1 up
 
     // Frightened flash toggle
@@ -116,7 +85,7 @@ function createGhost(name, color, eyeColor) {
     // Whether this ghost has been released this life
     released: start.outsideHouse,
 
-    // Target tile (for debug / visualisation)
+   
     targetTile: { col: 0, row: 0 },
   };
 }
@@ -132,12 +101,10 @@ function initGhosts() {
   startScatterChaseTimer();
 }
 
-// ---------------------------------------------------------------------------
-// 4. Scatter ↔ Chase timer
-// ---------------------------------------------------------------------------
+
 
 let scatterChaseTimer  = 0;
-let scatterChasePhase  = 'scatter'; // 'scatter' | 'chase'
+let scatterChasePhase  = 'scatter'; 
 let scatterChaseHandle = null;
 
 function startScatterChaseTimer() {
@@ -167,9 +134,6 @@ function reverseDirection(ghost) {
   ghost.dir = { x: -ghost.dir.x, y: -ghost.dir.y };
 }
 
-// ---------------------------------------------------------------------------
-// 5. Frightened mode (called from game.js when power pellet is eaten)
-// ---------------------------------------------------------------------------
 
 let frightenedTimer    = null;
 let flashTimer         = null;
@@ -179,7 +143,7 @@ function activateFrightened() {
   frightenedActive = true;
   ghostEatCombo    = 0;
 
-  // Turn eligible ghosts frightened
+
   ghosts.forEach(g => {
     if (g.state === 'scatter' || g.state === 'chase') {
       g.state   = 'frightened';
@@ -209,9 +173,9 @@ function activateFrightened() {
   }, FRIGHTENED_DURATION);
 }
 
-// ---------------------------------------------------------------------------
-// 6. Respawn (call on new life)
-// ---------------------------------------------------------------------------
+
+// This part for respawn (call on new life)
+
 
 function respawnGhosts() {
   clearTimeout(frightenedTimer);
@@ -221,9 +185,9 @@ function respawnGhosts() {
   initGhosts();
 }
 
-// ---------------------------------------------------------------------------
-// 7. Utility — tile / pixel helpers
-// ---------------------------------------------------------------------------
+
+//  Utility — tile / pixel helpers
+
 
 function tileToPixel(tileCoord) {
   return tileCoord * TILE_SIZE + TILE_SIZE / 2;
@@ -233,12 +197,11 @@ function pixelToTile(px) {
   return px / TILE_SIZE;
 }
 
-// Snap a fractional tile coord to nearest integer (tile centre check)
 function atTileCentre(coord) {
   return Math.abs(coord - Math.round(coord)) < 0.15;
 }
 
-// Is this tile passable for a ghost?
+
 // Ghosts can't go UP through the house door unless exiting/eaten
 function canGhostMove(col, row, ghost) {
   if (row < 0 || row >= maze.length)    return false;
@@ -248,13 +211,13 @@ function canGhostMove(col, row, ghost) {
   return true;
 }
 
-// Euclidean distance squared between two tile positions
+
 function distSq(ax, ay, bx, by) {
   return (ax - bx) ** 2 + (ay - by) ** 2;
 }
 
 // Get valid next directions for a ghost at its current tile centre
-// excludes reversing and walls
+
 function getValidDirs(ghost, excludeReverse) {
   const col = Math.round(ghost.x);
   const row = Math.round(ghost.y);
@@ -270,9 +233,8 @@ function getValidDirs(ghost, excludeReverse) {
   });
 }
 
-// ---------------------------------------------------------------------------
+
 // 8. Target tile logic — the heart of each ghost's personality
-// ---------------------------------------------------------------------------
 
 function getTargetTile(ghost) {
   const px = Math.round(player.x);
@@ -327,13 +289,12 @@ function getTargetTile(ghost) {
   }
 }
 
-// ---------------------------------------------------------------------------
-// 9. Direction choosing — minimise distance to target tile
-// ---------------------------------------------------------------------------
+// Direction choosing — minimise distance to target tile
+
 
 function chooseDirToward(ghost, target) {
   const validDirs = getValidDirs(ghost, true);
-  if (!validDirs.length) return ghost.dir; // shouldn't happen
+  if (!validDirs.length) return ghost.dir; 
 
   const col = Math.round(ghost.x);
   const row = Math.round(ghost.y);
@@ -361,9 +322,9 @@ function chooseDirRandom(ghost) {
   return validDirs[Math.floor(Math.random() * validDirs.length)];
 }
 
-// ---------------------------------------------------------------------------
-// 10. Ghost house logic
-// ---------------------------------------------------------------------------
+
+// Ghost house logic
+
 
 // Ghost bounces up/down inside the house until released
 function updateHouseGhost(ghost, delta) {
@@ -399,9 +360,9 @@ function updateExitingGhost(ghost, delta) {
   }
 }
 
-// ---------------------------------------------------------------------------
-// 11. Eaten ghost — rush back to house
-// ---------------------------------------------------------------------------
+
+// Eaten ghost — rush back to house
+
 
 function updateEatenGhost(ghost, delta) {
   const speed = GHOST_SPEED_EATEN * (delta / 1000);
@@ -436,9 +397,8 @@ function updateEatenGhost(ghost, delta) {
   }
 }
 
-// ---------------------------------------------------------------------------
-// 12. Main movement update
-// ---------------------------------------------------------------------------
+//  Main movement update
+
 
 function updateGhostMovement(ghost, delta) {
   const speed = ghost.state === 'frightened' ? GHOST_SPEED_FRIGHTENED
@@ -461,7 +421,7 @@ function updateGhostMovement(ghost, delta) {
       newDir            = chooseDirToward(ghost, target);
 
     } else {
-      return; // house / exiting handled elsewhere
+      return; // house ghosts don't choose direction here
     }
 
     ghost.dir = newDir;
@@ -477,19 +437,19 @@ function updateGhostMovement(ghost, delta) {
     ghost.x = nextX;
     ghost.y = nextY;
   } else {
-    // Hit a wall — snap to tile centre and pick a new direction next frame
+    // Hit a wall 
     ghost.x = Math.round(ghost.x);
     ghost.y = Math.round(ghost.y);
   }
 
-  // Tunnel wrap (same columns as Pac-Man, row 14)
+  //  (same columns as Pac-Man, row 14)
   if (ghost.x < 0)             ghost.x = maze[0].length - 1;
   if (ghost.x >= maze[0].length) ghost.x = 0;
 }
 
-// ---------------------------------------------------------------------------
-// 13. Collision with Pac-Man
-// ---------------------------------------------------------------------------
+
+// Collision with Pac-Man
+
 
 function checkGhostCollisions() {
   const px = player.x;
@@ -516,14 +476,14 @@ function checkGhostCollisions() {
 
 // Briefly show score popup where ghost was eaten
 function showEatScore(tx, ty, points) {
-  // Simple approach: show on HUD — or render on canvas if you prefer
+  
   console.log(`Ate ghost! +${points}`);
-  // If you want a canvas popup, draw it in drawGhosts() with a timer
+ 
 }
 
-// ---------------------------------------------------------------------------
-// 14. Master update function — call from game loop
-// ---------------------------------------------------------------------------
+
+// update function — call from game loop
+
 
 function updateGhosts(delta) {
   ghosts.forEach(ghost => {
@@ -562,9 +522,9 @@ function updateGhosts(delta) {
   checkGhostCollisions();
 }
 
-// ---------------------------------------------------------------------------
-// 15. Drawing
-// ---------------------------------------------------------------------------
+
+// Drawing
+
 
 function drawGhosts() {
   ghosts.forEach(ghost => {
@@ -586,7 +546,7 @@ function drawGhostBody(ghost) {
 
   let bodyColor;
   if (ghost.state === 'frightened') {
-    // Flashing: alternate between blue and white
+    // Flashing
     if (ghost.flashOn) {
       bodyColor = (Math.floor(Date.now() / 200) % 2 === 0) ? '#0000FF' : '#FFFFFF';
     } else {
@@ -596,7 +556,7 @@ function drawGhostBody(ghost) {
     bodyColor = ghost.color;
   }
 
-  // Body — rounded top
+  // Body 
   ctx.fillStyle = bodyColor;
   ctx.beginPath();
   ctx.arc(px + half, py + half * 0.75, half, Math.PI, 0, false); // dome
