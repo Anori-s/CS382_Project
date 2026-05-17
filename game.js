@@ -151,10 +151,11 @@ function eatPellet() {
     maze[row][col] = TILE.EMPTY;
     addScore(SCORES.PELLET);
     checkLevelUp(maze, TILE);   //level.js
-  } else if (maze[row][col]=== TILE.POWER) {
+} else if (maze[row][col]=== TILE.POWER) {
     maze[row][col] = TILE.EMPTY;
     addScore(SCORES.POWER);
     ghostCombo = 0;
+    activateFrightened();      // ← add this line
     checkLevelUp(maze,TILE);   //level.js
   }
 }
