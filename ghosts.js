@@ -26,7 +26,7 @@
 // 1. Constants
 // ---------------------------------------------------------------------------
 
-const GHOST_SPEED_NORMAL     = 3.5;  // tiles per second (normal)
+let GHOST_SPEED_NORMAL        = 3.5;  // tiles per second (normal)
 const GHOST_SPEED_FRIGHTENED = 2.0;  // tiles per second (frightened — slower)
 const GHOST_SPEED_EATEN      = 6.0;  // tiles per second (eaten — rushing home)
 const GHOST_SPEED_HOUSE      = 1.5;  // tiles per second (bouncing in house)

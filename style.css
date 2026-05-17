@@ -59,32 +59,31 @@ body {
   margin-bottom: 18px;
 }
 
-/* حقل إدخال الاسم */
-#player-name {
+/* جميع حقول الإدخال — all inputs share the same style */
+.input-group input {
   width: 100%;
   padding: 14px 16px;
-  
+
   border: 2px solid #3a3aff;
   border-radius: 10px;
-  
+
   background: #0f1020;
   color: #ffffff;
-  
-  font-family: inherit; /* نفس خط الصفحة */
+
+  font-family: inherit;
   font-size: 0.8rem;
-  
-  outline: none; /* إزالة الإطار الافتراضي */
+
+  outline: none;
+  box-sizing: border-box;
 }
 
-/* لون placeholder */
-#player-name::placeholder {
+.input-group input::placeholder {
   color: #8d92c9;
 }
 
-/* عند الضغط على الحقل */
-#player-name:focus {
-  border-color: #f7c948; /* يتحول أصفر */
-  box-shadow: 0 0 0 3px rgba(247, 201, 72, 0.2); /* تأثير خفيف */
+.input-group input:focus {
+  border-color: #f7c948;
+  box-shadow: 0 0 0 3px rgba(247, 201, 72, 0.2);
 }
 
 /* زر Play */
@@ -207,60 +206,7 @@ body {
   animation: blink 0.6s step-end infinite;
 }
 
-@keyframes blink {
-  50% { opacity: 0; }
-}
 
-.hidden { display: none !important; }
-
-/* Responsive: shrink on small screens */
-@media (max-width: 480px) {
-  .game-hud  { width: 100%; gap: 12px; }
-  #gameCanvas { width: 100%; height: auto; }
-}
-
-/* ─────────────────────────────────────────────
-   RESPONSIVE — scale canvas on small screens
-───────────────────────────────────────────── */
-@media (max-width: 480px) {
-  #gameCanvas {
-    width: 280px;
-    height: 310px;
-    transform-origin: top center;
-  }
-
-  #hud { gap: 16px; font-size: 9px; }
-
-  .start-screen h1 { font-size: 22px; letter-spacing: 4px; }
-
-  input[type="text"] { width: 200px; }
-}
-/* تصميم input حق الاسم والإيميل */
-#reg-name,
-#reg-email {
-  width: 100%;
-  padding: 14px 16px;
-  border: 2px solid #3a3aff;
-  border-radius: 10px;
-  background: #0f1020;
-  color: #ffffff;
-  font-family: inherit;
-  font-size: 0.8rem;
-  outline: none;
-}
-
-/* لون placeholder */
-#reg-name::placeholder,
-#reg-email::placeholder {
-  color: #8d92c9;
-}
-
-/* عند الضغط على الحقل */
-#reg-name:focus,
-#reg-email:focus {
-  border-color: #f7c948;
-  box-shadow: 0 0 0 3px rgba(247, 201, 72, 0.2);
-}
 
 /* رابط Register */
 .secondary-link {
@@ -274,4 +220,31 @@ body {
 /* hover */
 .secondary-link:hover {
   color: #ffd966;
+}
+
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.hidden { display: none !important; }
+
+/* shrink on small screens */
+@media (max-width: 480px) {
+  .game-hud  { width: 100%; gap: 12px; }
+  #gameCanvas { width: 100%; height: auto; }
+}
+
+@media (max-width: 480px) {
+  #gameCanvas {
+    width: 280px;
+    height: 310px;
+    transform-origin: top center;
+  }
+
+  #hud { gap: 16px; font-size: 9px; }
+
+  .start-screen h1 { font-size: 22px; letter-spacing: 4px; }
+
+  input[type="text"] { width: 200px; }
 }
