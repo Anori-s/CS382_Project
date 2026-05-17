@@ -356,7 +356,7 @@ function chooseDirToward(ghost, target) {
 }
 
 function chooseDirRandom(ghost) {
-  const validDirs = getValidDirs(ghost, true);
+  const validDirs = getValidDirs(ghost, false);
   if (!validDirs.length) return ghost.dir;
   return validDirs[Math.floor(Math.random() * validDirs.length)];
 }
