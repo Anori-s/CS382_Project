@@ -59,26 +59,26 @@
   <div>
     <button id="save-btn">SAVE SCORE</button>
     <button id="play-btn">PLAY AGAIN</button>
-    <button id="leaderboard-btn">LEADERBOARD</button>   <!-- NEW BUTTON -->
+    <button id="leaderboard-btn">LEADERBOARD</button>   
   </div>
   <div id="save-msg"></div>
 </div>
 
 <script>
-  const finalScore = sessionStorage.getItem('finalScore') || '0';
+  const finalScore = sessionStorage.getItem('finalScore') || '0'; //Get the final score from session storage (set by game.js when the game ends). If not found, default to '0'.
   const storedName = sessionStorage.getItem('playerName') || '';
-  document.getElementById('final-score').textContent = finalScore;
-  document.getElementById('name').value = storedName;
+  document.getElementById('final-score').textContent = finalScore; // Display the final score on the page.
+  document.getElementById('name').value = storedName;// If the player had previously entered a name
 
-  document.getElementById('save-btn').addEventListener('click', async () => {
-    const playerName = document.getElementById('name').value.trim();
+  document.getElementById('save-btn').addEventListener('click', async () => {// When the "SAVE SCORE" button is clicked, this function will run.
+    const playerName = document.getElementById('name').value.trim();// Get the player's name from the input field and remove any extra whitespace.
     if (!playerName) {
       alert('Enter your name');
       return;
     }
     const msgDiv = document.getElementById('save-msg');
     try {
-      const res = await fetch('save_score.php', {
+      const res = await fetch('save_score.php', {// Send a POST request to the server to save the score. We include the player's name and score in the request body as JSON.
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: playerName, score: parseInt(finalScore) })
@@ -98,12 +98,12 @@
   });
 
   document.getElementById('play-btn').addEventListener('click', () => {
-    window.location.href = 'game.html';
+    window.location.href = 'game.html';//" button is clicked, redirect the user back to the main game page (game.html) 
   });
 
-  // NEW: Leaderboard button redirect
+  
   document.getElementById('leaderboard-btn').addEventListener('click', () => {
-    window.location.href = 'leaderboard.html';
+    window.location.href = 'leaderboard.html';// When the "LEADERBOARD" button is clicked, leaderboard page
   });
 </script>
 </body>
