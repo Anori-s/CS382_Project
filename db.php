@@ -2,8 +2,8 @@
 // db.php
 $host = 'localhost';
 $dbname = 'pacman_db';
-$user = 'root';   // XAMPP default
-$pass = 'Norah123';       // XAMPP default (empty)
+$user = 'root'; 
+$pass = '';       
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $pass);
